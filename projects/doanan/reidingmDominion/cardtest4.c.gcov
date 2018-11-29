@@ -1,0 +1,568 @@
+        -:    0:Source:cardtest4.c
+        -:    0:Graph:cardtest4.gcno
+        -:    0:Data:cardtest4.gcda
+        -:    0:Runs:2
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include "rngs.h"
+        -:    4:#include <stdio.h>
+        -:    5:#include <assert.h>
+        -:    6:#include <stdlib.h>
+        -:    7:#include <string.h>
+        -:    8:
+function main called 2 returned 100% blocks executed 73%
+        2:    9:int main(){
+        -:   10:
+        -:   11:	int i, j; 					 	// counter
+        -:   12:	int p, p2;					// indicating which player
+        -:   13:	int pos;					// position
+        -:   14:	int numActions;				// number of numActions for player
+        -:   15:	int amount;					// coins
+        -:   16:	int found;					 // bool
+        -:   17:	int choice1, choice2, choice3; // player options
+        -:   18:	int deckSize;				// size of deck
+        -:   19:	int odecksize;				// other player's deck size
+        -:   20:	int pileSize;				// pile of usable cards
+        2:   21:	int numPlayers = 2;  		// players for valid gamestate
+        2:   22:	int numTests = 1; 		// large testing spread
+        -:   23:	struct gameState g;			// gamestate, original
+        -:   24:	struct gameState testState;		// gamestate under test
+        2:   25:	int k[10] = {feast, gardens, embargo, remodel, tribute, mine, cutpurse, ambassador, great_hall, steward};
+        2:   26:	char testCard[] = "Steward";	 // card under test
+        -:   27:
+        -:   28:
+        -:   29:
+        2:   30:	printf("---     TESTING CARD: %s    ---\n\n", testCard);
+call    0 returned 100%
+        -:   31:	
+        4:   32:	for(i = 0; i < numTests; i++){
+branch  0 taken 50%
+branch  1 taken 50% (fallthrough)
+        -:   33:		
+        -:   34:		// set hand basics for each game so the function can be called
+        2:   35:		pos = -1;
+        2:   36:		p = 0;
+        2:   37:		p2 = 1;
+        -:   38:
+        -:   39:
+        -:   40:		/******************************** Choice One **************************/
+        2:   41:		printf("***************TESTING CHOICE ONE: One***************\n");
+call    0 returned 100%
+        -:   42:		// copy into a test state so I don't destroy the world
+        2:   43:		initializeGame(numPlayers, k, 1000, &g);
+call    0 returned 100%
+        2:   44:		memcpy(&testState, &g, sizeof(struct gameState));
+        -:   45:
+        -:   46:
+        -:   47:		// begin test for Choice One
+        2:   48:		deckSize = testState.handCount[p];										// how many are originally in hand before play
+        2:   49:		odecksize = testState.deckCount[p2];									// how many are originall in other's hand before play
+        2:   50:		numActions = testState.numActions;											// numActions available
+        2:   51:		pileSize = testState.deckCount[p];										// pile of non-trashed cards before play
+        2:   52:		amount = g.coins;																// current coins at 0
+        -:   53:
+        -:   54:		// play the steward card, changes to counts will occur from this point out. Choice 1
+        2:   55:		cardEffect(steward, 1, 0, 0, &testState, 0, 0);
+call    0 returned 100%
+        -:   56:		
+        -:   57:		// test to make sure player gains two cards with choice 1
+        2:   58:		printf("\nTest 1: Play Steward, choice1, and gain two cards:\n");
+call    0 returned 100%
+        2:   59:		if(g.handCount[p] + 1 == testState.handCount[p]) // lose steward (-1) and gain 2 (+2) = 1
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:   60:			printf("Passed. Expected hand count: %d   Hand count finish: %d\n", g.handCount[p] +1, testState.handCount[p]);
+call    0 returned 100%
+        -:   61:		else
+    #####:   62:			printf("FAILED. Deck size start: %d   Deck size finish: %d\n", g.handCount[p] +1, testState.handCount[p]);
+call    0 never executed
+        -:   63:
+        -:   64:		// test to make sure player gains 2 numActions
+        2:   65:		printf("\nTest 2: Play Steward, choice1, make sure no numActions are given:\n");
+call    0 returned 100%
+        2:   66:		if(numActions == testState.numActions) 
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:   67:			printf("Passed. Expected gained actions: %d   Gained Actions finish: %d\n", 0, testState.numActions - numActions);
+call    0 returned 100%
+        -:   68:		else
+    #####:   69:			printf("FAILED. Expected gained actions: %d   Gained Actions finish: %d\n", 0, testState.numActions - numActions);	
+call    0 never executed
+        -:   70:
+        -:   71:		// test to make sure player gains no money
+        2:   72:		printf("\nTest 3: Play Steward, choice1, make sure no coins are given:\n");
+call    0 returned 100%
+        2:   73:		if(amount == testState.coins) 
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:   74:			printf("Passed. Expected coins gained: %d   Coins gained finish: %d\n", 0, testState.coins - amount);
+call    0 returned 100%
+        -:   75:		else
+    #####:   76:			printf("FAILED. Expected coins gained: %d   Coins gained finish: %d\n", 0, testState.coins - amount);	
+call    0 never executed
+        -:   77:
+        -:   78:		//test to make sure the card is going to the played pile after use. Already established other players deck is unchanged
+        2:   79:		printf("\nTest 4: Steward card added to played pile after use:\n");
+call    0 returned 100%
+        2:   80:		if(testState.playedCardCount == 1)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:   81:			printf("Passed. Expected increase in played pile: %d     To played pile: %d\n", 1, testState.playedCardCount);
+call    0 returned 100%
+        -:   82:		else
+    #####:   83:			printf("FAILED. Expected increase in played pile: %d   To played pile: %d\n", 1, testState.playedCardCount);
+call    0 never executed
+        -:   84:
+        -:   85:		//test to make sure the other player's hand didn't change. No cards given, none taken from
+        2:   86:		printf("\nTest 5: Other player's deck size unchanged when steward is drawn:\n");
+call    0 returned 100%
+        2:   87:		if(testState.deckCount[p2] == odecksize)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:   88:			printf("Passed. Deck size start: %d   Deck size finish: %d\n", odecksize, testState.deckCount[p2]);
+call    0 returned 100%
+        -:   89:		else
+    #####:   90:			printf("FAILED. Deck size start: %d   Deck size finish: %d\n", odecksize, testState.deckCount[p2]);
+call    0 never executed
+        -:   91:
+        -:   92:		//test to make sure the other player's hand didn't change. No cards given, none taken from
+        2:   93:		printf("\nTest 6: Other player's hand size unchanged when steward is drawn:\n");
+call    0 returned 100%
+        2:   94:		if(testState.handCount[p2] == g.handCount[p2])
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:   95:			printf("Passed. Hand size start: %d   Hand size finish: %d\n", g.handCount[p2], testState.handCount[p2]);
+call    0 returned 100%
+        -:   96:		else
+    #####:   97:			printf("FAILED. Hand size start: %d   Hand size finish: %d\n", g.handCount[p2], testState.handCount[p2]);
+call    0 never executed
+        -:   98:
+        -:   99:		//test to make sure the cards come from own player's pile, and is not stealing from elsewhere
+        2:  100:		printf("\nTest 7: Player is drawing from own pile:\n");
+call    0 returned 100%
+        2:  101:		if(g.deckCount[p] -2 == testState.deckCount[p]) //  5 in deck - 2 taken from it
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:  102:			printf("Passed. Expected: %d   Deck size finish: %d\n", g.deckCount[p] - 2, testState.deckCount[p]);
+call    0 returned 100%
+        -:  103:		else
+    #####:  104:			printf("FAILED. Expected: %d   Deck size finish: %d\n", g.deckCount[p] - 2, testState.deckCount[p]);
+call    0 never executed
+        -:  105:
+        -:  106:		
+        -:  107:		//test for world state changes, will indicate if any victory cards have been given out inappropriately
+        2:  108:		printf("\nTest 8: : Test supply counts for points and curses that should not have been distributed: \n ");
+call    0 returned 100%
+        2:  109:		if(g.supplyCount[estate] != testState.supplyCount[estate])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  110:			printf("FAILED. Estate Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[estate], testState.supplyCount[estate]);
+call    0 never executed
+        2:  111:		if(g.supplyCount[duchy] != testState.supplyCount[duchy])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  112:			printf("FAILED. Duchy Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[duchy], testState.supplyCount[duchy]);
+call    0 never executed
+        2:  113:		if(g.supplyCount[province] != testState.supplyCount[province])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  114:			printf("FAILED. Province Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[province], testState.supplyCount[province]);
+call    0 never executed
+        2:  115:		if(g.supplyCount[curse] != testState.supplyCount[curse])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  116:			printf("FAILED. Province Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[curse], testState.supplyCount[curse]);
+call    0 never executed
+        -:  117:		else
+        2:  118:			printf("Passed. Supply counts for curses and victory cards are the same\n");
+call    0 returned 100%
+        -:  119:
+        -:  120:		// test for changes in money supply that shouldn't have been activated, will test for money being given to players
+        2:  121:		printf("\nTest 9: Test supply counts for treasure that should have been distributed: \n");
+call    0 returned 100%
+        2:  122:		if(g.supplyCount[copper] != testState.supplyCount[copper])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  123:			printf("FAILED. Copper Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[copper], testState.supplyCount[copper]);
+call    0 never executed
+        2:  124:		if(g.supplyCount[silver] != testState.supplyCount[silver])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  125:			printf("FAILED. Silver Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[silver], testState.supplyCount[silver]);
+call    0 never executed
+        2:  126:		if(g.supplyCount[gold] != testState.supplyCount[gold])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  127:			printf("FAILED. Gold Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[gold], testState.supplyCount[gold]);
+call    0 never executed
+        -:  128:		else
+        2:  129:			printf("Passed. Supply counts for treasure cards are the same\n");
+call    0 returned 100%
+        -:  130:
+        -:  131:
+        -:  132:		/************************* Choice Two ************************************/
+        2:  133:		printf("***************TESTING CHOICE ONE: Two ***************\n");
+call    0 returned 100%
+        2:  134:		initializeGame(numPlayers, k, 1000, &g);
+call    0 returned 100%
+        2:  135:		memcpy(&testState, &g, sizeof(struct gameState));
+        -:  136:
+        -:  137:		// begin test for Choice 2
+        2:  138:		deckSize = testState.handCount[p];										// how many are originally in hand before play
+        2:  139:		odecksize = testState.deckCount[p2];									// how many are originall in other's hand before play
+        2:  140:		numActions = testState.numActions;											// numActions available
+        2:  141:		pileSize = testState.deckCount[p];										// pile of non-trashed cards before play
+        2:  142:		amount = g.coins + 2;																// current coins at 0
+        -:  143:
+        -:  144:		// play the steward card, changes to counts will occur from this point out. Choice 2
+        2:  145:		cardEffect(steward, 2, 0, 0, &testState, 0, 0);
+call    0 returned 100%
+        -:  146:
+        -:  147:		// test to make sure player gains no cards
+        2:  148:		printf("\nTest 1: Play Steward, choice2, and gain no cards:\n");
+call    0 returned 100%
+        2:  149:		if(g.handCount[p] -1 == testState.handCount[p]) 
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:  150:			printf("Passed. Expected hand count: %d   Hand count finish: %d\n", g.handCount[p] -1, testState.handCount[p]);
+call    0 returned 100%
+        -:  151:		else
+    #####:  152:			printf("FAILED. Hand size start: %d   Hand size finish: %d\n", g.handCount[p] -1, testState.handCount[p]);
+call    0 never executed
+        -:  153:
+        -:  154:		// test to make sure player gains no numActions
+        2:  155:		printf("\nTest 2: Play Steward, choice2, make sure no numActions are given:\n");
+call    0 returned 100%
+        2:  156:		if(numActions == testState.numActions) 
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:  157:			printf("Passed. Expected Actions: %d   Actions gained finish: %d\n", numActions, testState.numActions - g.numActions);
+call    0 returned 100%
+        -:  158:		else
+    #####:  159:			printf("FAILED. Expeccted Actions %d   Actions gained finish: %d\n", numActions, testState.numActions - g.numActions);	
+call    0 never executed
+        -:  160:
+        -:  161:		// test to make sure player gains two coins
+        2:  162:		printf("\nTest 3: Play Steward, choice2, make sure two coins are given:\n");
+call    0 returned 100%
+        2:  163:		if(amount == testState.coins)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:  164:			printf("Passed. Expected hand count: %d   Hand count finish: %d\n", amount, testState.coins);
+call    0 returned 100%
+        -:  165:		else
+    #####:  166:			printf("FAILED. Deck size start: %d   Deck size finish: %d\n", amount, testState.coins);	
+call    0 never executed
+        -:  167:
+        -:  168:		//test to make sure the card is going to the played pile after use. Already established other players deck is unchanged
+        2:  169:		printf("\nTest 4: Steward card added to played pile after use:\n");
+call    0 returned 100%
+        2:  170:		if(testState.playedCardCount == 1)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:  171:			printf("Passed. Expected increase in played pile: %d     To played pile: %d\n", 1, testState.playedCardCount);
+call    0 returned 100%
+        -:  172:		else
+    #####:  173:			printf("FAILED. Expected increase in played pile: %d   To played pile: %d\n", 1, testState.playedCardCount);
+call    0 never executed
+        -:  174:
+        -:  175:		
+        -:  176://test to make sure the other player's hand didn't change. No cards given, none taken from
+        2:  177:		printf("\nTest 5: Other player's deck size unchanged when steward is drawn:\n");
+call    0 returned 100%
+        2:  178:		if(testState.deckCount[p2] == odecksize)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:  179:			printf("Passed. Deck size start: %d   Deck size finish: %d\n", odecksize, testState.deckCount[p2]);
+call    0 returned 100%
+        -:  180:		else
+    #####:  181:			printf("FAILED. Deck size start: %d   Deck size finish: %d\n", odecksize, testState.deckCount[p2]);
+call    0 never executed
+        -:  182:
+        -:  183:		//test to make sure the other player's hand didn't change. No cards given, none taken from
+        2:  184:		printf("\nTest 6: Other player's hand size unchanged when steward is drawn:\n");
+call    0 returned 100%
+        2:  185:		if(testState.handCount[p2] == g.handCount[p2])
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:  186:			printf("Passed. Hand size start: %d   Hand size finish: %d\n", g.handCount[p2], testState.handCount[p2]);
+call    0 returned 100%
+        -:  187:		else
+    #####:  188:			printf("FAILED. Hand size start: %d   Hand size finish: %d\n", g.handCount[p2], testState.handCount[p2]);
+call    0 never executed
+        -:  189:
+        -:  190:		//test to make sure the cards come from own player's pile, and is not stealing from elsewhere
+        2:  191:		printf("\nTest 7: Player isn't drawing more from own pile:\n");
+call    0 returned 100%
+        2:  192:		if(g.deckCount[p] == testState.deckCount[p]) //  
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:  193:			printf("Passed. Expected: %d   Deck size finish: %d\n", g.deckCount[p] - 2, testState.deckCount[p]);
+call    0 returned 100%
+        -:  194:		else
+    #####:  195:			printf("FAILED. Expected: %d   Deck size finish: %d\n", g.deckCount[p] - 2, testState.deckCount[p]);
+call    0 never executed
+        -:  196:
+        -:  197:		
+        -:  198:		//test for world state changes, will indicate if any victory cards have been given out inappropriately
+        2:  199:		printf("\nTest 8: : Test supply counts for points and curses that should not have been distributed: \n ");
+call    0 returned 100%
+        2:  200:		if(g.supplyCount[estate] != testState.supplyCount[estate])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  201:			printf("FAILED. Estate Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[estate], testState.supplyCount[estate]);
+call    0 never executed
+        2:  202:		if(g.supplyCount[duchy] != testState.supplyCount[duchy])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  203:			printf("FAILED. Duchy Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[duchy], testState.supplyCount[duchy]);
+call    0 never executed
+        2:  204:		if(g.supplyCount[province] != testState.supplyCount[province])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  205:			printf("FAILED. Province Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[province], testState.supplyCount[province]);
+call    0 never executed
+        2:  206:		if(g.supplyCount[curse] != testState.supplyCount[curse])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  207:			printf("FAILED. Province Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[curse], testState.supplyCount[curse]);
+call    0 never executed
+        -:  208:		else
+        2:  209:			printf("Passed. Supply counts for curses and victory cards are the same\n");
+call    0 returned 100%
+        -:  210:
+        -:  211:		// test for changes in money supply that shouldn't have been activated, will test for money being given to players
+        2:  212:		printf("\nTest 9: Test supply counts for treasure that should have been distributed: \n");
+call    0 returned 100%
+        2:  213:		if(g.supplyCount[copper] != testState.supplyCount[copper])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  214:			printf("FAILED. Copper Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[copper], testState.supplyCount[copper]);
+call    0 never executed
+        2:  215:		if(g.supplyCount[silver] != testState.supplyCount[silver])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  216:			printf("FAILED. Silver Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[silver], testState.supplyCount[silver]);
+call    0 never executed
+        2:  217:		if(g.supplyCount[gold] != testState.supplyCount[gold])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  218:			printf("FAILED. Gold Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[gold], testState.supplyCount[gold]);
+call    0 never executed
+        -:  219:		else
+        2:  220:			printf("Passed. Supply counts for treasure cards are the same\n");
+call    0 returned 100%
+        -:  221:
+        -:  222:
+        -:  223:		/********************************** Choice 3 *************************************/
+        2:  224:		printf("***************TESTING CHOICE ONE: Else ***************\n");
+call    0 returned 100%
+        2:  225:		initializeGame(numPlayers, k, 1000, &g);
+call    0 returned 100%
+        2:  226:		g.hand[p][0] = steward;
+        2:  227:		g.hand[p][1] = estate;
+        2:  228:		g.hand[p][2] = duchy;
+        2:  229:		g.hand[p][3] = province;
+        2:  230:		g.hand[p][4] = great_hall;
+        2:  231:		g.deck[p][0] = steward;
+        2:  232:		g.deck[p][1] = feast;
+        2:  233:		g.deck[p][2] = province;
+        2:  234:		g.deck[p][3] = gardens;
+        2:  235:		g.deck[p][4] = mine;
+        2:  236:		memcpy(&testState, &g, sizeof(struct gameState));
+        -:  237:
+        -:  238:		// begin test for Choice 3
+        2:  239:		amount = g.coins;																// current coins at 0
+        2:  240:		numActions = g.numActions;
+        -:  241:
+        -:  242:		// play the steward card, changes to counts will occur from this point out. Choice 3
+        2:  243:		cardEffect(steward, 3, duchy, estate, &testState, 0, 0);
+call    0 returned 100%
+        -:  244:
+        -:  245:		// test to make sure player gains no cards
+        2:  246:		printf("\nTest 1: Play Steward, choice3, and discard two cards:\n");
+call    0 returned 100%
+        2:  247:		if(g.handCount[p] -3 == testState.handCount[p])  // steward -1, -2 trashing
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:  248:			printf("Passed. Expected hand count: %d   Hand count finish: %d\n", g.handCount[p] -3, testState.handCount[p]);
+call    0 returned 100%
+        -:  249:		else
+    #####:  250:			printf("FAILED. Deck size start: %d   Deck size finish: %d\n", g.handCount[p] -3, testState.handCount[p]);
+call    0 never executed
+        -:  251:
+        -:  252:		// test to make sure player gains no numActions
+        2:  253:		printf("\nTest 2: Play Steward, choice2, make sure no numActions are given:\n");
+call    0 returned 100%
+        2:  254:		if(numActions == testState.numActions) 
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:  255:			printf("Passed. Expected Actions gained: %d   Actions gained finish: %d\n", 0, testState.numActions - g.numActions);
+call    0 returned 100%
+        -:  256:		else
+    #####:  257:			printf("FAILED. Expeccted Actions  gained: %d   Actions gained finish: %d\n", 0, testState.numActions - g.numActions);	
+call    0 never executed
+        -:  258:
+        -:  259:		// test to make sure player gains no coins
+        2:  260:		printf("\nTest 3: Play Steward, choice3, make sure two coins are given:\n");
+call    0 returned 100%
+        2:  261:		if(amount == testState.coins)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:  262:			printf("Passed. Expected coins gained: %d   coins gained finish: %d\n", 0, testState.coins - amount);
+call    0 returned 100%
+        -:  263:		else
+    #####:  264:			printf("FAILED. Expected coins gained: %d   coins gained finish: %d\n", 0, testState.coins - amount);	
+call    0 never executed
+        -:  265:
+        -:  266:		//test to make sure removed cards are no longer in hand
+        2:  267:		printf("\nTest 4: Make sure the removed cards aren't in hand:\n");
+call    0 returned 100%
+        2:  268:		found = 0;
+        6:  269:		for(j = 0; j < testState.handCount[p]; j++){
+branch  0 taken 67%
+branch  1 taken 33% (fallthrough)
+        4:  270:			if(testState.hand[p][j] == duchy || testState.hand[p][j] == estate)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+branch  2 taken 0% (fallthrough)
+branch  3 taken 100%
+    #####:  271:				found = 1;
+        -:  272:		}
+        -:  273:
+        2:  274:		if(found != 1)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:  275:			printf("Passed. Removed cards no longer in hand\n");
+call    0 returned 100%
+        -:  276:		else
+    #####:  277:			printf("FAILED. Removed cards not trashed\n");
+call    0 never executed
+        -:  278:	
+        -:  279:
+        -:  280:		//test to make sure removed cards are no longer in deck
+        2:  281:		printf("\nTest 5: Make sure the removed cards aren't in deck:\n");
+call    0 returned 100%
+        2:  282:		found = 0;
+       12:  283:		for(j = 0; j < testState.deckCount[p]; j++){
+branch  0 taken 83%
+branch  1 taken 17% (fallthrough)
+       10:  284:			if(testState.deck[p][j] == duchy || testState.deck[p][j] == estate)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+branch  2 taken 0% (fallthrough)
+branch  3 taken 100%
+    #####:  285:				found = 1;
+        -:  286:		}
+        -:  287:
+        2:  288:		if(found != 1)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:  289:			printf("Passed. Removed cards not in deck\n");
+call    0 returned 100%
+        -:  290:		else
+    #####:  291:			printf("FAILED. Removed cards in deck.\n");
+call    0 never executed
+        -:  292:
+        2:  293:		printf("\nTest5b: Discard count should not be inremented if trashed: \n");
+call    0 returned 100%
+        2:  294:		if(testState.discardCount[p] >= 2)
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  295:			printf("Passed. Removed cards trashed\n");
+call    0 never executed
+        -:  296:		else
+        2:  297:			printf("FAILED. Removed cards not trashed.\n");
+call    0 returned 100%
+        -:  298:
+        -:  299:		//test to make sure the other player's hand didn't change. No cards given, none taken from
+        2:  300:		printf("\nTest 6: Other player's deck size unchanged when steward is drawn:\n");
+call    0 returned 100%
+        2:  301:		if(testState.deckCount[p2] == odecksize)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:  302:			printf("Passed. Deck size start: %d   Deck size finish: %d\n", odecksize, testState.deckCount[p2]);
+call    0 returned 100%
+        -:  303:		else
+    #####:  304:			printf("FAILED. Deck size start: %d   Deck size finish: %d\n", odecksize, testState.deckCount[p2]);
+call    0 never executed
+        -:  305:
+        -:  306:		//test to make sure the other player's hand didn't change. No cards given, none taken from
+        2:  307:		printf("\nTest 7: Other player's hand size unchanged when steward is drawn:\n");
+call    0 returned 100%
+        2:  308:		if(testState.handCount[p2] == g.handCount[p2])
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:  309:			printf("Passed. Hand size start: %d   Hand size finish: %d\n", g.handCount[p2], testState.handCount[p2]);
+call    0 returned 100%
+        -:  310:		else
+    #####:  311:			printf("FAILED. Hand size start: %d   Hand size finish: %d\n", g.handCount[p2], testState.handCount[p2]);
+call    0 never executed
+        -:  312:
+        -:  313:		//test to make sure the cards come from own player's pile, and is not stealing from elsewhere
+        2:  314:		printf("\nTest 8: Player is not drawing more cards from own pile:\n");
+call    0 returned 100%
+        2:  315:		if(g.deckCount[p] == testState.deckCount[p]) // drew no additional cards
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        2:  316:			printf("Passed. Expected: %d   Deck size finish: %d\n", g.deckCount[p], testState.deckCount[p]);
+call    0 returned 100%
+        -:  317:		else
+    #####:  318:			printf("FAILED. Expected: %d   Deck size finish: %d\n", g.deckCount[p], testState.deckCount[p]);
+call    0 never executed
+        -:  319:
+        -:  320:		
+        -:  321:		//test for world state changes, will indicate if any victory cards have been given out inappropriately
+        2:  322:		printf("\nTest 9: : Test supply counts for points and curses that should not have been distributed: \n ");
+call    0 returned 100%
+        2:  323:		if(g.supplyCount[estate] != testState.supplyCount[estate])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  324:			printf("FAILED. Estate Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[estate], testState.supplyCount[estate]);
+call    0 never executed
+        2:  325:		if(g.supplyCount[duchy] != testState.supplyCount[duchy])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  326:			printf("FAILED. Duchy Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[duchy], testState.supplyCount[duchy]);
+call    0 never executed
+        2:  327:		if(g.supplyCount[province] != testState.supplyCount[province])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  328:			printf("FAILED. Province Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[province], testState.supplyCount[province]);
+call    0 never executed
+        2:  329:		if(g.supplyCount[curse] != testState.supplyCount[curse])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  330:			printf("FAILED. Province Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[curse], testState.supplyCount[curse]);
+call    0 never executed
+        -:  331:		else
+        2:  332:			printf("Passed. Supply counts for curses and victory cards are the same\n");
+call    0 returned 100%
+        -:  333:
+        -:  334:		// test for changes in money supply that shouldn't have been activated, will test for money being given to players
+        2:  335:		printf("\nTest 10: Test supply counts for treasure that should have been distributed: \n");
+call    0 returned 100%
+        2:  336:		if(g.supplyCount[copper] != testState.supplyCount[copper])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  337:			printf("FAILED. Copper Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[copper], testState.supplyCount[copper]);
+call    0 never executed
+        2:  338:		if(g.supplyCount[silver] != testState.supplyCount[silver])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  339:			printf("FAILED. Silver Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[silver], testState.supplyCount[silver]);
+call    0 never executed
+        2:  340:		if(g.supplyCount[gold] != testState.supplyCount[gold])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  341:			printf("FAILED. Gold Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[gold], testState.supplyCount[gold]);
+call    0 never executed
+        -:  342:		else
+        2:  343:			printf("Passed. Supply counts for treasure cards are the same\n");
+call    0 returned 100%
+        -:  344:
+        -:  345:	}
+        -:  346:
+        2:  347:	return 0;
+        -:  348:}

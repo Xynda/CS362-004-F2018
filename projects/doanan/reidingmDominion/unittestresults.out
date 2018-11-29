@@ -1,0 +1,472 @@
+----------------- RUNNING TEST BUNDLE : Printout --------------
+All
+make[1]: Entering directory `/nfs/stak/users/doanan/CS362-004-F2018/projects/doanan/dominion'
+./cardtest1
+---     TESTING CARD: Smithy   ---
+
+
+Test 1: Play Smithy and gain 3 cards:
+FAILED. Deck size start: 7   Deck size finish: 6
+
+Test 2: Other player's deck size unchanged when smithy is drawn:
+Passed. Deck size start: 10   Deck size finish: 10
+
+Test 2b: Other player's hand size unchanged when smithy is drawn:
+Passed. Hand size start: 0   Hand size finish: 0
+
+Test 3: Player is drawing from own pile:
+FAILED. Expected: 2   Deck size finish: 3
+
+Test 4: Smithy card added to played pile after use:
+Passed. Expected increase in played pile: 1     To played pile: 1
+
+Test 5: : Test supply counts for points and curses that should not have been distributed: 
+ Passed. Supply counts for curses and victory cards are the same
+
+Test 6: Test supply counts for treasure that should have been distributed: 
+Passed. Supply counts for treasure cards are the same
+./cardtest2
+---     TESTING CARD: adventurer    ---
+
+ 
+Test 1: Play Adventurer and draw until two coins are drawn:
+FAILED. Coin card amount expeccted: 2   count finish: 1
+Coin cards Found: silver, 
+Test 1b: Gained cards, coin ammount unchanged till use:
+Passed. Coin amount the same
+
+Test 1c: Check test one again, but with gold drawn:
+FAILED. Coin card amount expeccted: 2   count finish: 1
+Coin cards Found: gold, 
+Test 2: Make sure all cards were discarded that were not coins:
+Passed. Expected discard amount: 1   Discarded finish: 1
+
+Test 3: Other player's deck size unchanged when adventurer is drawn:
+Passed. Deck size start: 10   Deck size finish: 10
+
+Test 3b: Other player's hand size unchanged when adventurer is drawn:
+Passed. Hand size start: 0   Hand size finish: 0
+
+Test 4: Player is drawing and keeping only two cards from own pile:
+FAILED. Expected: 2   Deck size finish: 3
+
+Test 5: Adventurer card added to played pile after use:
+FAILED. Expected increase in played pile: 1   To played pile: 0
+
+Test 6: Test supply counts for treasure that should have been distributed: 
+Passed. Supply counts for treasure cards are the same
+
+Test 7: : Test supply counts for points and curses that should not have been distributed: 
+ Passed. Supply counts for curses and victory cards are the same
+./cardtest3
+---     TESTING CARD: Village     ---
+
+
+Test 1: Play Village and gain 1 card:
+Passed. Expected hand count: 5   Hand count finish: 5
+
+Test 2: Play Village and gain 2 numActions:
+Passed. Expected Action count: 2   Action finish: 2
+
+Test 3: Other player's deck size unchanged when village is drawn:
+Passed. Deck size start: 10   Deck size finish: 10
+
+Test 3b: Other player's hand size unchanged when village is drawn:
+Passed. Hand size start: 0   Hand size finish: 0
+
+Test 4: Player is drawing from own pile:
+Passed. Expected: 4   Deck size finish: 4
+
+Test 5: Village card added to played pile after use:
+Passed. Expected increase in played pile: 1     To played pile: 1
+
+Test 6: : Test supply counts for points and curses that should not have been distributed: 
+ Passed. Supply counts for curses and victory cards are the same
+
+Test 7: Test supply counts for treasure that should have been distributed: 
+Passed. Supply counts for treasure cards are the same
+./cardtest4
+---     TESTING CARD: Steward    ---
+
+***************TESTING CHOICE ONE: One***************
+
+Test 1: Play Steward, choice1, and gain two cards:
+Passed. Expected hand count: 6   Hand count finish: 6
+
+Test 2: Play Steward, choice1, make sure no numActions are given:
+Passed. Expected gained actions: 0   Gained Actions finish: 0
+
+Test 3: Play Steward, choice1, make sure no coins are given:
+Passed. Expected coins gained: 0   Coins gained finish: 0
+
+Test 4: Steward card added to played pile after use:
+Passed. Expected increase in played pile: 1     To played pile: 1
+
+Test 5: Other player's deck size unchanged when steward is drawn:
+Passed. Deck size start: 10   Deck size finish: 10
+
+Test 6: Other player's hand size unchanged when steward is drawn:
+Passed. Hand size start: 0   Hand size finish: 0
+
+Test 7: Player is drawing from own pile:
+Passed. Expected: 3   Deck size finish: 3
+
+Test 8: : Test supply counts for points and curses that should not have been distributed: 
+ Passed. Supply counts for curses and victory cards are the same
+
+Test 9: Test supply counts for treasure that should have been distributed: 
+Passed. Supply counts for treasure cards are the same
+***************TESTING CHOICE ONE: Two ***************
+
+Test 1: Play Steward, choice2, and gain no cards:
+Passed. Expected hand count: 4   Hand count finish: 4
+
+Test 2: Play Steward, choice2, make sure no numActions are given:
+Passed. Expected Actions: 1   Actions gained finish: 0
+
+Test 3: Play Steward, choice2, make sure two coins are given:
+Passed. Expected hand count: 6   Hand count finish: 6
+
+Test 4: Steward card added to played pile after use:
+Passed. Expected increase in played pile: 1     To played pile: 1
+
+Test 5: Other player's deck size unchanged when steward is drawn:
+Passed. Deck size start: 10   Deck size finish: 10
+
+Test 6: Other player's hand size unchanged when steward is drawn:
+Passed. Hand size start: 0   Hand size finish: 0
+
+Test 7: Player isn't drawing more from own pile:
+Passed. Expected: 3   Deck size finish: 5
+
+Test 8: : Test supply counts for points and curses that should not have been distributed: 
+ Passed. Supply counts for curses and victory cards are the same
+
+Test 9: Test supply counts for treasure that should have been distributed: 
+Passed. Supply counts for treasure cards are the same
+***************TESTING CHOICE ONE: Else ***************
+
+Test 1: Play Steward, choice3, and discard two cards:
+Passed. Expected hand count: 2   Hand count finish: 2
+
+Test 2: Play Steward, choice2, make sure no numActions are given:
+Passed. Expected Actions gained: 0   Actions gained finish: 0
+
+Test 3: Play Steward, choice3, make sure two coins are given:
+Passed. Expected coins gained: 0   coins gained finish: 0
+
+Test 4: Make sure the removed cards aren't in hand:
+Passed. Removed cards no longer in hand
+
+Test 5: Make sure the removed cards aren't in deck:
+Passed. Removed cards not in deck
+
+Test5b: Discard count should not be inremented if trashed: 
+FAILED. Removed cards not trashed.
+
+Test 6: Other player's deck size unchanged when steward is drawn:
+Passed. Deck size start: 10   Deck size finish: 10
+
+Test 7: Other player's hand size unchanged when steward is drawn:
+Passed. Hand size start: 0   Hand size finish: 0
+
+Test 8: Player is not drawing more cards from own pile:
+Passed. Expected: 5   Deck size finish: 5
+
+Test 9: : Test supply counts for points and curses that should not have been distributed: 
+ Passed. Supply counts for curses and victory cards are the same
+
+Test 10: Test supply counts for treasure that should have been distributed: 
+Passed. Supply counts for treasure cards are the same
+./unittest3
+---     TESTING FUNCTION: updateCoins     ---
+
+Test 1: Copper increases coins by 1: 
+Passed. Expected 1    Returned 1
+
+Test 1b: Other player gained nothing to deck: 
+Passed. Expected other user's deck to remain 10   It's now: 10
+Test 2: Silver increases coins by 2: 
+Passed. Expected 2    Returned 2
+
+Test 2b: Other player gained nothing to deck: 
+Passed. Expected other user's deck to remain 10   It's now: 10
+Test 3: Gold increases coins by 3: 
+Passed. Expected 3    Returned 3
+
+Test 2b: Other player gained nothing to deck: 
+Passed. Expected other user's deck to remain 10   It's now: 10
+Test 4: Bonus produces incease equivalent to input (coins + 1): 
+Passed. Expected 4    Returned 4
+
+Test 4b: Other player gained nothing to deck: 
+Passed. Expected other user's deck to remain 10   It's now: 10
+Test 5: Bonus produces increase equivalent to input (coins + 3): 
+Passed. Expected 6    Returned 6
+
+Test 5b: Other player gained nothing to deck: 
+Passed. Expected other user's deck to remain 10   It's now: 10
+
+Test 6: : Test supply counts for points and curses that should not have been distributed: 
+ Passed. Supply counts for curses and victory cards are the same
+
+Test 7: Test supply counts for treasure that should have been distributed: 
+Passed. Supply counts for treasure cards are the same
+./unittest1
+---     TESTING FUNCTION: isGameOver    ---
+
+Test 1: Province is empty, should be game over: 
+Passed. Expected 1    Returned 1
+
+Test 2: Three empty supply decks end game: 
+Passed. Expected 1    Returned 1
+
+Test 3: Two empty supply decks should not end game: 
+Passed. Expected 0    Returned 0
+
+Test 4: Three empty supply decks end game: 
+Passed. Expected 0    Returned 0
+
+Test 5: Test supply counts for treasure that should have been distributed: 
+Passed. Supply counts for treasure cards are the same
+./unittest2
+---     TESTING FUNCTION: gainCard     ---
+
+Test 1: Cannot gain a card which is out of stock: 
+Passed. Expected -1    Returned -1
+
+Test 2: Cannot gain a card which is not in game: 
+Passed. Expected -1    Returned -1
+
+Test 3: Flag One, Card is added to players deck: 
+Passed. Expected 6    Returned 6
+
+Test 4: Flag Two, Card is added to players hand: 
+Passed. Expected 6    Returned 6
+
+Test 5: Flag zero, Card is discarded: 
+Passed. Expected 1    Returned 1
+
+Test 6: Supply count is decreased: 
+Passed. Expected 9    Returned 9
+
+Test 7: : Test supply counts for points and curses that should not have been distributed: 
+ Passed. Supply counts for curses and victory cards are the same
+
+Test 8: Test supply counts for treasure that should have been distributed: 
+Passed. Supply counts for treasure cards are the same
+./unittest4
+---     TESTING FUNCTION: discardCard    ---
+
+
+Test 1: Card added to played pile if w/trash flag 0: 
+Passed. Expected 1    Returned 1
+Test 1b: Other player didn't gain to hand: 
+Passed. Expected other user's hand to remain 0   It's now: 0
+Test 1c: Other player didn't gain to deck: 
+Passed. Expected other user's deck to remain 10   It's now: 10
+
+Test 2: Card not added to played pile if trash flag set: 
+Passed. Expected 0    Returned 0
+Test 2b: Other player didn't gain to hand: 
+Passed. Expected other user's hand to remain 0   It's now: 0
+Test 2c: Other player didn't gain to deck: 
+Passed. Expected other user's deck to remain 10   It's now: 10
+
+Test 3: Card is removed from hand when discarded: 
+Passed. Card not found in hand.
+Test 3b: Other player didn't gain to hand: 
+Passed. Expected other user's hand to remain 0   It's now: 0
+Test 3c: Other player didn't gain to deck: 
+Passed. Expected other user's deck to remain 10   It's now: 10
+
+Test 4: Card is removed from hand when trashed: 
+Passed. Expected 4    Returned 4
+Test 4b: Other player didn't gain to hand: 
+Passed. Expected other user's hand to remain 0   It's now: 0
+Test 4c: Other player didn't gain to deck: 
+Passed. Expected other user's deck to remain 10   It's now: 10
+
+Test 4: One card in hand, will reduce to 0: 
+Passed. Expected 0    Returned 0
+Test 4b: Other player didn't gain to hand: 
+Passed. Expected other user's hand to remain 0   It's now: 0
+Test 4c: Other player didn't gain to deck: 
+Passed. Expected other user's deck to remain 10   It's now: 10
+
+Test 5: Makes sure if more cards available, last card set: 
+Passed. Expected -1    Returned -1
+Test 5b: Other player didn't gain to hand: 
+Passed. Expected other user's hand to remain 0   It's now: 0
+Test 5c: Other player didn't gain to deck: 
+Passed. Expected other user's deck to remain 10   It's now: 10
+
+Test 6: : Test supply counts for points and curses that should not have been distributed: 
+ Passed. Supply counts for curses and victory cards are the same
+
+Test 7: Test supply counts for treasure that should have been distributed: 
+Passed. Supply counts for treasure cards are the same
+make[1]: Leaving directory `/nfs/stak/users/doanan/CS362-004-F2018/projects/doanan/dominion'
+ --------------- COVERAGE: Individual functions and TOTAL DOMINION.C COVERAGE -------------------
+Function 'updateCoins'
+Lines executed:81.82% of 11
+Branches executed:100.00% of 8
+Taken at least once:75.00% of 8
+No calls
+
+Function 'gainCard'
+Lines executed:0.00% of 13
+Branches executed:0.00% of 6
+Taken at least once:0.00% of 6
+Calls executed:0.00% of 1
+
+Function 'discardCard'
+Lines executed:92.31% of 13
+Branches executed:100.00% of 6
+Taken at least once:83.33% of 6
+No calls
+
+Function 'cardEffect'
+Lines executed:0.00% of 212
+Branches executed:0.00% of 179
+Taken at least once:0.00% of 179
+Calls executed:0.00% of 59
+
+Function 'sea_hagFact'
+Lines executed:0.00% of 8
+Branches executed:0.00% of 4
+Taken at least once:0.00% of 4
+No calls
+
+Function 'salvagerFact'
+Lines executed:0.00% of 9
+Branches executed:0.00% of 2
+Taken at least once:0.00% of 2
+Calls executed:0.00% of 4
+
+Function 'great_hallFact'
+Lines executed:0.00% of 7
+No branches
+Calls executed:0.00% of 2
+
+Function 'smithyFact'
+Lines executed:0.00% of 5
+Branches executed:0.00% of 2
+Taken at least once:0.00% of 2
+Calls executed:0.00% of 2
+
+Function 'adventurerFact'
+Lines executed:0.00% of 15
+Branches executed:0.00% of 12
+Taken at least once:0.00% of 12
+Calls executed:0.00% of 2
+
+Function 'getCost'
+Lines executed:0.00% of 30
+Branches executed:0.00% of 28
+Taken at least once:0.00% of 28
+No calls
+
+Function 'drawCard'
+Lines executed:36.36% of 22
+Branches executed:33.33% of 6
+Taken at least once:16.67% of 6
+Calls executed:0.00% of 1
+
+Function 'getWinners'
+Lines executed:0.00% of 24
+Branches executed:0.00% of 22
+Taken at least once:0.00% of 22
+Calls executed:0.00% of 2
+
+Function 'scoreFor'
+Lines executed:0.00% of 24
+Branches executed:0.00% of 42
+Taken at least once:0.00% of 42
+Calls executed:0.00% of 3
+
+Function 'isGameOver'
+Lines executed:0.00% of 10
+Branches executed:0.00% of 8
+Taken at least once:0.00% of 8
+No calls
+
+Function 'endTurn'
+Lines executed:0.00% of 20
+Branches executed:0.00% of 6
+Taken at least once:0.00% of 6
+Calls executed:0.00% of 3
+
+Function 'whoseTurn'
+Lines executed:0.00% of 2
+No branches
+No calls
+
+Function 'fullDeckCount'
+Lines executed:0.00% of 9
+Branches executed:0.00% of 12
+Taken at least once:0.00% of 12
+No calls
+
+Function 'supplyCount'
+Lines executed:0.00% of 2
+No branches
+No calls
+
+Function 'handCard'
+Lines executed:0.00% of 3
+No branches
+Calls executed:0.00% of 1
+
+Function 'numHandCards'
+Lines executed:0.00% of 2
+No branches
+Calls executed:0.00% of 1
+
+Function 'buyCard'
+Lines executed:0.00% of 13
+Branches executed:0.00% of 6
+Taken at least once:0.00% of 6
+Calls executed:0.00% of 4
+
+Function 'playCard'
+Lines executed:0.00% of 14
+Branches executed:0.00% of 10
+Taken at least once:0.00% of 10
+Calls executed:0.00% of 3
+
+Function 'shuffle'
+Lines executed:93.75% of 16
+Branches executed:100.00% of 8
+Taken at least once:87.50% of 8
+Calls executed:100.00% of 2
+
+Function 'initializeGame'
+Lines executed:83.87% of 62
+Branches executed:95.65% of 46
+Taken at least once:80.43% of 46
+Calls executed:100.00% of 5
+
+Function 'kingdomCards'
+Lines executed:0.00% of 13
+No branches
+No calls
+
+Function 'newGame'
+Lines executed:0.00% of 3
+No branches
+No calls
+
+Function 'compare'
+Lines executed:83.33% of 6
+Branches executed:100.00% of 4
+Taken at least once:75.00% of 4
+No calls
+
+File 'dominion.c'
+Lines executed:17.78% of 568
+Branches executed:17.27% of 417
+Taken at least once:14.15% of 417
+Calls executed:7.37% of 95
+Creating 'dominion.c.gcov'
+
